@@ -102,7 +102,7 @@ class Game:
         self.commit_piece()
 
     def commit_piece(self):
-        self.grid.grid[*self.current_piece.location] = self.current_piece.shape
+        self.grid.grid[self.current_piece.location[0], self.current_piece.location[1]] = self.current_piece.shape
         self.current_piece = None
         self.check_break()
 
@@ -132,7 +132,7 @@ class Grid:
     color_codes["J"] = "36"
 
     def __init__(self, width=10, height=20):
-        self.piece_start = np.array([[0], [math.floor(width/2) - 2]])  # TODO calculate top left coord for piece start
+        self.piece_start = np.array([[0], [math.floor(width/2) - 2]])  # calculates top left coord for piece start
         self.width = width
         self.height = height
         self.grid = np.full((height, width), self.EMPTY_SYMBOL)
@@ -145,7 +145,7 @@ class Grid:
     def show_grid(self, piece=None, no_buffer=False):
         grid_to_print = self.grid.copy()
         if piece:
-            grid_to_print[*piece.location] = piece.shape
+            grid_to_print[piece.location[0], piece.location[1]] = piece.shape
         if no_buffer or not np.array_equal(grid_to_print, self.last_grid_shown):
             array_str = np.array2string(grid_to_print)
             grid_str = array_str.replace("[", "").replace("]", "").replace("'", "").replace("\n ", "\n")
@@ -350,7 +350,7 @@ class Piece:
         right_out_of_bounds = len(np.where(self.location[1] >= grid.width)[0]) > 0
         if height_out_of_bounds or left_out_of_bounds or right_out_of_bounds:
             return False
-        spaces_in_location = grid.grid[*self.location]
+        spaces_in_location = grid.grid[self.location[0], self.location[1]]
         collision = len(np.where(spaces_in_location != "-")[0]) > 0
         return not collision
 
