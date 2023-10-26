@@ -1,4 +1,2 @@
-# apps-script-projects
-personal and work projects on the apps script platform
-
-The project folders contain information for each project!
+# mini-projects
+personal and work projects on various platforms
